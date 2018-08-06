@@ -2,10 +2,10 @@
 sort, find median, binary search
 find dup, 
 
-##given array A[]:
+## given array A[]:
 
 
-##INSERTION SORT
+## INSERTION SORT
 ```python
 def InsertionSort(list):
 	for i in range(1,len(list)):
@@ -42,7 +42,7 @@ void InsertionSort(int arr[], int n)
 }
 ```
 
-##SELECTION SORT
+## SELECTION SORT
 ```python
 def SelectionSort(arr):
 	for i in range(0,len(arr)-1):
@@ -55,7 +55,6 @@ def SelectionSort(arr):
 
 ```
 
-##SELECTION SORT
 ```cpp
 #include <cstdlib>
 #include <cstdio>
@@ -65,10 +64,10 @@ using namespace std;
 void SelectionSort(int arr[], int n)
 {
 	int i, j, min;
-	for(i=0,i<n-1,i++)
+	for(i=0;i<n-1;i++)
 	{
 		min = i;
-		for(j=i+1,j<n,j++)
+		for(j=i+1;j<n;j++)
 		{
 			if (arr[j] < arr[min])
 			{
@@ -80,20 +79,14 @@ void SelectionSort(int arr[], int n)
 		//so we need &arr[i]
 	int min_num = arr[min];
 	arr[min] = arr[i];
-	arr[min] = min_num;
+	arr[i] = min_num;
 
 	}
 }
 
-void swap(int *p1, int *p2)
-{
-	int temp = *p1;
-	*p1 = *p2;
-	*p2 = temp;
-}
 ```
 
-##MERGE SORT
+## MERGE SORT
 ```python
 def MergeSort(arr):
 	if len(arr) == 1:

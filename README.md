@@ -2,7 +2,7 @@ __Implementation of Foundamental Algorithms and Data Structures in _python_ and 
 
 # algo
 * sort: insertion, merge, heap, quick, 
-* search
+* search: binary
 * graph-bfs,dfs, topo sort, 
 * spanning tree
 * path planning
