@@ -1,4 +1,4 @@
-#USAGE: 
+# USAGE: 
 sort, find median, binary search
 find dup, 
 
@@ -88,9 +88,79 @@ void SelectionSort(int arr[], int n)
 
 ## MERGE SORT
 ```python
-def MergeSort(arr):
-	if len(arr) == 1:
-		return arr[0]
-	else:
+def MergeSort(arr, start=0, end=None):
+	if not end:
+		end = len(arr)
+	if end-start>1:
+		mid = (end+start)//2
+		MergeSort(arr, start, mid)
+		MergeSort(arr, mid, end)
+		merge(arr,start, mid, end)
+
+def merge(arr, start, mid, end):
+	larr = arr[start:mid] + [float('inf')]
+	rarr = arr[mid:end] + [float('inf')]
+	il = 0
+	ir = 0
+	for j in range(end-start):
+		if larr[il] > rarr[ir]:
+			arr[start+j] = rarr[ir]
+			ir += 1
+		else:
+			arr[start+j] = larr[il]
+			il += 1
+```
+```cpp
+#include <cstdio>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+void merge(int arr[], int start, int mid, int end)
+{
+	int il, ir;
+	il = mid-start;
+	ir = end-mid;
+	int larr[il+1], rarr[ir+1];
+	//copy(arr+start,arr+mid, larr)
+	//copy(arr+mid, arr+end, rarr)
+	for(il=0;il<mid-start;il++)
+	{
+		larr[il] = arr[start+il];
+	}
+	larr[il] = 100;
+	//for infinity
+	//not il+1, because il from last loop is already max+1
+	for(ir=0;ir<end-mid;ir++)
+	{
+		rarr[ir] = arr[mid+ir];
+	}
+	rarr[ir] = 100;
+	il = 0;
+	ir = 0;
+	int j;
+
+	for(j=0;j<end-start;j++)
+	{
+		if(larr[il] < rarr[ir])
+		{
+			arr[j] = larr[il];
+			il++;
+		} else
+		{
+			arr[j] = rarr[ir];
+			ir++;
+		}
+	}
+}
+void MergeSort(int arr[], int start, int end)
+{
+	if(end-start > 1)
+	{
+		int mid = (start+end)/2;
+		MergeSort(arr, start, mid);
+		MergeSort(arr, mid, end);
+		merge(arr, start, mid, end);
+	}
+}
 
 ```

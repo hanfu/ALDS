@@ -1,6 +1,8 @@
 #include <cstdio>
 #include <cmath>
 #include <iostream>
+//#include <algorithm>
+
 using namespace std;
 
 void InsertionSort(int arr[], int n)
@@ -17,7 +19,6 @@ void InsertionSort(int arr[], int n)
 		}
 		arr[j] = key;
 	}
-
 }
 
 void SelectionSort(int arr[], int n)
@@ -43,20 +44,68 @@ void SelectionSort(int arr[], int n)
 	}
 }
 
+void merge(int arr[], int start, int mid, int end)
+{
+	int il, ir;
+	il = mid-start;
+	ir = end-mid;
+	int larr[il+1], rarr[ir+1];
+	//copy(arr+start,arr+mid, larr)
+	//copy(arr+mid, arr+end, rarr)
+	for(il=0;il<mid-start;il++)
+	{
+		larr[il] = arr[start+il];
+	}
+	larr[il] = 100;
+	//for infinity
+	//not il+1, because il from last loop is already max+1
+	for(ir=0;ir<end-mid;ir++)
+	{
+		rarr[ir] = arr[mid+ir];
+	}
+	rarr[ir] = 100;
+	il = 0;
+	ir = 0;
+	int j;
+
+	for(j=0;j<end-start;j++)
+	{
+		if(larr[il] < rarr[ir])
+		{
+			arr[j] = larr[il];
+			il++;
+		} else
+		{
+			arr[j] = rarr[ir];
+			ir++;
+		}
+	}
+}
+void MergeSort(int arr[], int start, int end)
+{
+	if(end-start > 1)
+	{
+		int mid = (start+end)/2;
+		MergeSort(arr, start, mid);
+		MergeSort(arr, mid, end);
+		merge(arr, start, mid, end);
+	}
+}
+
 void printArray(int arr[], int n)
 {
    int i;
    for (i=0; i < n; i++)
-       printf("%d ", arr[i]);
-   printf("\n");
+       cout<<arr[i]<<" ";
+   cout<<endl;
 }
 
 int main(int argc, char const *argv[])
 {
-	int arr[] = {4,2,3,2,1,0};
+	int arr[] = {1,2,2};
     int n = sizeof(arr)/sizeof(arr[0]);
  
-    SelectionSort(arr, n);
+    MergeSort(arr, 0, n);
     //std::cout << arr <<endl;
  	printArray(arr, n);
 	return 0;

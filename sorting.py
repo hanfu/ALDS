@@ -53,3 +53,46 @@ def select_min(arr):
 			min = i
 	return min
 '''
+
+def MergeSort(arr, start=0, end=-1):
+	if end==-1:
+		end = len(arr)
+	if start < end:
+		mid = (start+end)/2
+		MergeSort(arr, start=start, end=mid)
+		MergeSort(arr, start=mid+1, end=len(arr))
+
+def MergeSort_extraspace(arr):
+	if 1 < len(arr):
+		mid = len(arr)//2#floor divide
+		#print(mid)
+		arr[:mid] = MergeSort(arr[:mid])
+		arr[mid:] = MergeSort(arr[mid:])
+		#has to assign becuase right hand arr[] reproduce new arr
+		#so newarr = arr[] and left hand arr[] refer to original arr
+		#so text book change index of arr[start,end] to modify arr onsite
+		merge(arr, mid)
+	return arr
+
+def MergeSort(arr, start=0, end=None):
+	if not end:
+		end = len(arr)
+	if end-start>1:
+		mid = (end+start)//2
+		print(start,mid,end)
+		MergeSort(arr, start, mid)
+		MergeSort(arr, mid, end)
+		merge(arr,start, mid, end)
+
+def merge(arr, start, mid, end):
+	larr = arr[start:mid] + [float('inf')]
+	rarr = arr[mid:end] + [float('inf')]
+	il = 0
+	ir = 0
+	for j in range(end-start):
+		if larr[il] > rarr[ir]:
+			arr[start+j] = rarr[ir]
+			ir += 1
+		else:
+			arr[start+j] = larr[il]
+			il += 1
