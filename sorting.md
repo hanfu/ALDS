@@ -2,10 +2,20 @@
 sort, find median, binary search
 find dup, 
 
+ALGORITHMS | SPACE | TIME
+--- | --- | ---
+__INSERTION__ | in place | n^2
+__MERGE__ | n | n logn
+__HEAP__ | in place | n logn
+
+
 ## given array A[]:
 
 
 ## INSERTION SORT
+space: in place
+time: bigO(n^2)
+
 ```python
 def InsertionSort(list):
 	for i in range(1,len(list)):
