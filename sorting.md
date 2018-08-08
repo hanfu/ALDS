@@ -164,3 +164,8 @@ void MergeSort(int arr[], int start, int end)
 }
 
 ```
+
+## find how far an array is from sorted (count inversions, Q2.4 on CLRS p41)
+
+```python
+```

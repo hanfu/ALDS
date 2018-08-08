@@ -96,3 +96,6 @@ def merge(arr, start, mid, end):
 		else:
 			arr[start+j] = larr[il]
 			il += 1
+
+def count_inversion(arr):
+	
