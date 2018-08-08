@@ -16,6 +16,7 @@ __Implementation of Foundamental Algorithms and Data Structures in _python_ and 
 
 # design
 * divide&conquer
+* random
 * recursive-iterative
 * dynamic
 * greedy

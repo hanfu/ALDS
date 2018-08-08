@@ -1,12 +1,14 @@
 # USAGE: 
 sort, find median, binary search
-find dup, 
+find dup, examine fundamental algo designs
 
 ALGORITHMS | SPACE | TIME
 --- | --- | ---
 __INSERTION__ | in place | n^2
 __MERGE__ | n | n logn
 __HEAP__ | in place | n logn
+__QUICK__ | in place | n logn (exp)
+__COUNTING__ | in place | n+k
 
 
 ## given array A[]:
@@ -179,3 +181,16 @@ void MergeSort(int arr[], int start, int end)
 
 ```python
 ```
+
+## HEAP SORT
+
+## Optimization of Comparison Sort
+
+## TREE SORT
+
+## COUNTING SORT
+## RADIX SORT
+##BUCKET SORT
+
+## ORDER STATISTIC
+FIND i-th NUMBER
