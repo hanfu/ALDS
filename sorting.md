@@ -184,6 +184,33 @@ void MergeSort(int arr[], int start, int end)
 
 ## HEAP SORT
 
+```python
+def reorder(arr, size, i):
+	if not size:
+		size = len(arr)
+	l = 2*(i+1) - 1
+	r = 2*(i+1)
+	maxnode = None
+	if l<size and arr[l] > arr[i]:
+		if r<size and arr[r] > arr[i]:
+			maxnode = max(l,r,key=lambda k:arr[k])
+		maxnode = l
+	if maxnode:
+		arr[maxnode], arr[i] = arr[i], arr[maxnode]
+		reorder(arr, size=size, i=maxnode)
+
+def heapify(arr):
+	minleaf = len(arr)//2
+	#consider 0-based python index vs. 1-based heap
+	for i in range(minleaf-1,-1,-1):
+		reorder(arr, size=len(arr), i=i)
+def HeapSort(arr):
+	heapify(arr)
+	for i in range(len(arr)-1, 0, -1):
+		arr[0], arr[i] = arr[i], arr[0]
+		reorder(arr, size=i, i=0)
+```
+
 ## Optimization of Comparison Sort
 
 ## TREE SORT
