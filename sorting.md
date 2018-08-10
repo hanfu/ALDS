@@ -210,6 +210,33 @@ def HeapSort(arr):
 		arr[0], arr[i] = arr[i], arr[0]
 		reorder(arr, size=i, i=0)
 ```
+## QUICKSORT
+```python
+def pivot(arr, start, end):
+	pvalue = arr[end]
+	pivot = start
+	i = start
+	while i < end:
+		if arr[i] <= pvalue:
+			arr[pivot], arr[i] = arr[i], arr[pivot]
+			pivot+=1
+			i+=1
+		else:
+			i+=1
+	arr[end], arr[pivot] = arr[pivot], arr[end]
+	return pivot
+
+def QuickSort(arr, start=None, end=None):
+	if (start==None) and (end==None):
+		start = 0
+		end = len(arr)-1
+	#pay attention not use if not start/end
+	#cuz 0 == False in python, None is safe though
+	if start<end:
+		p = pivot(arr, start, end)
+		QuickSort(arr, start, p-1)
+		QuickSort(arr, p+1, end)
+```
 
 ## Optimization of Comparison Sort
 

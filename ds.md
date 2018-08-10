@@ -1,3 +1,9 @@
+# matrix
+
+stack, queue, deque, linked list, double linked list
+
+insert,/delete, search, max/min, successor/predecessor
+
 ## HEAP
 
 binary tree
@@ -10,3 +16,17 @@ height = lg n
 ### max/min heap
 max heap: parent>n>children
 
+### Priority Queue (heap powered)
+
+given arr
+
+```python
+def showmax(arr):
+	return arr[0]
+
+```
+
+## current issues
+* no examplary implementation, most are arbitary code snippets
+* confusion between functional programming and object-oriented programming
+* reuse of code from .py to .md

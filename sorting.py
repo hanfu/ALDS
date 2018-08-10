@@ -28,6 +28,7 @@ def InsertionSort(arr):
 #no swap, but remember the key
 
 import unittest
+import random
 
 
 def InsertionSort(arr):
@@ -127,4 +128,69 @@ def HeapSort(arr):
 	for i in range(len(arr)-1, 0, -1):
 		arr[0], arr[i] = arr[i], arr[0]
 		reorder(arr, size=i, i=0)
+
+def pivot(arr, start, end):
+	pvalue = arr[end]
+	pivot = start
+	i = start
+	while i < end:
+		if arr[i] <= pvalue:
+			arr[pivot], arr[i] = arr[i], arr[pivot]
+			pivot+=1
+			i+=1
+		else:
+			i+=1
+	arr[end], arr[pivot] = arr[pivot], arr[end]
+	return pivot
+
+def QuickSort(arr, start=None, end=None):
+	if (start==None) and (end==None):
+		start = 0
+		end = len(arr)-1
+	#pay attention not use if not start/end
+	#cuz 0 == False in python, None is safe though
+	if start<end:
+		p = pivot(arr, start, end)
+		QuickSort(arr, start, p-1)
+		QuickSort(arr, p+1, end)
+
+def pivot_random(arr, start, end):
+	p = random.choice(range(start, end+1))
+	arr[p], arr[end] = arr[end], arr[p]
+	#instead of re-write, simply swap random p with last element
+	return pivot(arr, start, end)
+
+def QuickSort(arr, start=None, end=None):
+	if (start==None) and (end==None):
+		start = 0
+		end = len(arr)-1
+	if start<end:
+		p = pivot_random(arr, start, end)
+		QuickSort(arr, start, p-1)
+		QuickSort(arr, p+1, end)
+
+def CountingSort(arr, max):
+	countarr = [0]*(max+1)
+	sortedarr = arr[*]
+	for i in arr:
+		countarr[i] += 1
+	for i in range(1,max+1):
+		countarr[i] = countarr[i] + countarr[i-1]
+	#for stability of array
+	for i in range(max, -1, -1):
+		sortedarr[countarr[arr[i]]]=arr[i]
+		countarr[arr[i]] -= 1
+	return sortedarr
+
+def OrderStat(arr, start, order, end):
+	if start == end:
+		return arr[start]#if the only number is left
+	pivot = pivot_random(arr, start, end)
+	if pivot == order:
+		return arr[pivot]
+	elif pivot<order:
+		OrderStat(arr, pivot+1, start+order-1-pivot, end)
+	else:
+		OrderStat(arr, start, order, pivot-1)
+
 

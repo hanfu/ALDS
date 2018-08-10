@@ -10,7 +10,7 @@ __Implementation of Foundamental Algorithms and Data Structures in _python_ and 
 # ds
 * tree: bst, rbt, 
 * hashtable
-* queue,stack
+* queue,stack: __priorityqueue__
 * trie,heap
 * linked list
 
