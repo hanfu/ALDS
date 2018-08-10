@@ -238,7 +238,22 @@ def QuickSort(arr, start=None, end=None):
 		QuickSort(arr, p+1, end)
 ```
 
+
+
 ## Optimization of Comparison Sort
+think of comparison sort as binary tree
+let n = # levels, l = # leaves
+2^n = l
+so for l elements, sort all by comparison must be l * lg l
+
+## counting sort
+given non-negetive int and max of arr
+
+## order selection
+given arr, return ith element
+basic: sort all and return with index, nlgn time
+linear time: employ quicksort and recursively work on half
+
 
 ## TREE SORT
 

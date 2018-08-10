@@ -1,4 +1,4 @@
-# matrix
+# linear
 
 stack, queue, deque, linked list, double linked list
 
