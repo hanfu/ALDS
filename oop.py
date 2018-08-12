@@ -69,7 +69,7 @@ def decor_func(innerfunc):
 def func1(*a, **kw):
     print("Wheee!")
 
-func1_d = my_decorator(func1)
+func1_d = decor_func(func1)
 
 @decor_func
 def newfunc1(*a, **kw):
@@ -117,6 +117,9 @@ aFunction()
 #now prints myDecorator.__call__()
 #NOT inside func because class attr overwrite
 
+def decorator(func):
+	pass
+
 @decorator
 def foo(*args, **kwargs):
     pass
@@ -124,15 +127,21 @@ def foo(*args, **kwargs):
 foo = decorator(foo)
 
 #So if the decorator had arguments,
-@decorator_with_args(arg)
+def decorator_arg(arg):
+	return decorator
+	#return a decorator func
+
+arg = 'someblah'
+@decorator_arg(arg)
 def foo(*args, **kwargs):
     pass
 #translates to
-foo = decorator_with_args(arg)(foo)
+foo = decorator_arg(arg)(foo)
 
 
 #talking about super()
-
+class parent:
+	pass
 class ClassName(parent):
 	"""docstring for ClassName"""
 	def __init__(self, arg):
@@ -141,3 +150,15 @@ class ClassName(parent):
 		
 #shortcut for parent class
 
+#try except testing
+arr = [1,2,3]
+def tryindex(arr):
+	try:
+		maximum = 1
+		maximum = max(arr[2],  arr[3], 2)
+		maximum = 10
+	except IndexError:
+		pass
+	return maximum
+	#conclusion: run till error line
+	#conclusion: python will abort entire line 

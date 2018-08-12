@@ -29,4 +29,9 @@ def showmax(arr):
 ## current issues
 * no examplary implementation, most are arbitary code snippets
 * confusion between functional programming and object-oriented programming
+*** use provided list/dict and user-defined funcs
+*** design new class objects with funcs included
 * reuse of code from .py to .md
+
+## hashing comparsion:
+direct vs. chaining vs. open address
