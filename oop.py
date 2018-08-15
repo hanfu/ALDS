@@ -140,15 +140,46 @@ foo = decorator_arg(arg)(foo)
 
 
 #talking about super()
-class parent:
-	pass
-class ClassName(parent):
-	"""docstring for ClassName"""
-	def __init__(self, arg):
-		super(ClassName, self).__init__()
-		self.arg = arg
-		
-#shortcut for parent class
+#1. pass subclass' args to superclass
+class Superclass(object):
+    def __init__(self, arg1, arg2, arg3):
+        #Initialise some variables
+        #Call some methods
+        pass
+
+class Subclass(Superclass):
+    def __init__(self, subclass_arg1, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+		#same as Superclass.__init__(*a, **kw)
+		#if python2, super(ClassName, self).__init__()
+        pass
+
+
+#2. shortcut for parent class in more subtle inherentence
+class A():
+    def __init__(self):
+        print("A")
+        self.a = 'a'
+
+class B(A):
+    def __init__(self):
+        print("B")
+        self.b = 'b'
+        #class A not init at all. 
+        #no 'first' printed, nor attr a.
+
+class C(B):
+    def __init__(self):
+        super().__init__()
+        print("C")
+        #super calls class B
+        #prints second and third, and have attr b = 'b'
+
+
+#override: subclass replace the method/attr
+#overload: same method act differently on different input(mostly data type)
+
+
 
 #try except testing
 arr = [1,2,3]

@@ -142,15 +142,14 @@ class Node3:
             return 1
         else:
             return 0
+    def __str__(self):
+        return str(self._v)
     @property
     def v(self):
         return self._v
     @v.setter
     def v(self, value):
         self._v = value
-
-
-
 
 class BTree(Node3):
     #no integrate btree class, but enhenced Node3 class
@@ -172,6 +171,15 @@ class BTree(Node3):
     @r.setter
     def r(self, value):
         self._r = value
+
+    @property
+    def p(self):
+        return self._p
+    @p.setter
+    def p(self, value):
+        self._p = value
+
+
 
 
 class multibranchtree:
@@ -286,3 +294,208 @@ class hashtable:
 
 #if load factor is large, collisions tends to be more
 #so lower performance in general
+
+class BST():
+    def __init__(self, v):
+        self.root = BTree(v)
+
+    def search_iter(self, v):
+        n = self.root
+        while n.v != v and n != None:
+            if v > n.v:
+                n = n.r
+            else:
+                n = n.l
+        return n
+
+    def search_recurr(self, v):
+        n = self.root
+        if v == n.v or n == None:
+            return n
+        if v > n.v:
+            #in recurrsive, remember to RETURN the result
+            return self.search_recurr(n.r)
+        else:
+            return self.search_recurr(n.l)
+
+
+    def maximum(self, n = None):
+        if n == None:
+            n = self.root
+        while n.r != None:
+            n = n.r
+        return n
+
+    def minimum(self, n = None):
+        if n == None:
+            n = self.root
+        while n.l != None:
+            n = n.l
+        return n
+
+    def walk(self, n='root'):
+        if n == 'root':
+            n = self.root
+        while n != None:
+            self.walk(n.l)
+            print(n)
+            self.walk(n.r)
+            break#need this
+            #otherwise will print n.v forever
+
+    def successor(self, v):
+        n = self.search_iter(v)
+        #forget to consider n with right branch
+        if n.r:
+            return self.maximum(n)
+        while n.p.l != n and n.p != None:
+            n = n.p
+        return n.p
+
+        
+    def insert(self, v):
+        n = self.root
+        p = None
+        while n != None:
+            p = n
+            if n.v < v:
+                n = n.r
+            else:
+                n = n.l
+        if p.v < v:
+            p.r = BTree(v)
+            p.r.p = p
+        else:
+            p.l = BTree(v)
+            p.l.p = p
+        #because of python, p.r.p must be typed to be assigned with new value
+        #if n = n.l while n.l is None, n will just be None, instead of p.l
+        #if in c, *n.l can be passed <- new node
+
+    def transplant(self, n1, n2):
+        p = n1.p
+        if p == None:
+            self.root = n2
+        elif n1 == p.l:
+            p.l = n2
+        else:
+            p.r = n2
+        if n2:
+            n2.p = p
+        #n1 and its children are ignored
+        #only modify parent-node relation
+        #no touch on node-l/r relation
+
+
+    def delete(self, v):
+        n = self.search_iter(v)
+        if n.l == None:
+            self.transplant(n, n.r)
+        elif n.r == None:
+            self.transplant(n, n.l)
+        else:
+            s = self.minimum(n.r)
+            if n.r != s:
+                self.transplant(s, s.r)
+                s.r = n.r
+                s.r.p = s
+            self.transplant(n,s)
+            s.l = n.l
+            s.l.p = s
+
+
+class RBNode(BTree):
+    def __init__(self, value):
+        super().__init__(value)
+        self._isred = 1
+        
+    @property
+    def isred(self):
+        return self._isred
+
+    @isred.setter
+    def isred(self, value):
+        self._isred = value
+
+    def __str__(self):
+        color = 'red' if self.isred else 'black'
+        return "%s node: %d" % (color, self.v)
+    
+
+class RBT(BST):
+    def __init__(self, v):
+        self.root = RBNode(v)
+        self.root.isred = 0
+
+    def rotl(self, node, dir=None):
+        """rotate node to be left child of its current right child"""
+        #antidir = r if dir = l else l
+        noder = node.r
+        node.r = noder.l
+        if node == node.p.l:
+            node.p.l = noder
+        else:
+            node.p.r = noder
+        noder.p = node.p
+        node.p = noder
+        noder.l = node
+    
+
+    def rot(self, node, direction):
+        """rotate the parent node to be the child in the direction of its current anti-dir child"""
+        antidir = 'r' if direction == 'l' else 'l'
+        nextnode = getattr(node, antidir)
+        setattr(node, antidir, getattr(nextnode, direction))
+        if node == self.root:
+            self.root = nextnode
+        elif node == node.p.l:
+            node.p.l = nextnode
+        else:
+            node.p.r = nextnode
+        nextnode.p = node.p
+        node.p = nextnode
+        setattr(nextnode, direction, node)
+
+    
+    def flipcolor(self, node):
+        """recolor a given node based on its child"""
+        node.isred = 1 if node.isred == 0 else 0
+
+    def fixup(self, node):
+        while node.p != None and node.p.isred:
+            direction, antidir = ('l','r') if node.p == node.p.p.l else ('r','l')
+            ancle = getattr(node.p.p, antidir)
+            if ancle != None and ancle.isred:
+                node.p.isred = 0
+                ancle.isred = 0
+                node.p.p.isred = 1
+                node = node.p.p
+            elif getattr(node.p, antidir) == node:
+                node = node.p
+                self.rot(node, direction)
+            if node.p != None and node.p.p != None:
+                node.p.isred = 0
+                node.p.p.isred = 1
+                self.rot(node.p.p, antidir)
+        self.root.isred = 0
+
+
+
+    def insert(self, v):
+        """insert the node of given value"""
+        n = self.root
+        p = None
+        while n != None:
+            p = n
+            if n.v < v:
+                n = n.r
+            else:
+                n = n.l
+        if p.v < v:
+            p.r = RBNode(v)
+            p.r.p = p
+            self.fixup(p.r)
+        else:
+            p.l = RBNode(v)
+            p.l.p = p
+            self.fixup(p.l)
