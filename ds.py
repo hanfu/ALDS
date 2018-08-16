@@ -463,6 +463,7 @@ class RBT(BST):
 
     def fixup(self, node):
         while node.p != None and node.p.isred:
+        #can use hasattr()
             direction, antidir = ('l','r') if node.p == node.p.p.l else ('r','l')
             ancle = getattr(node.p.p, antidir)
             if ancle != None and ancle.isred:

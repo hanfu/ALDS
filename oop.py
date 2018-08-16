@@ -190,6 +190,14 @@ def tryindex(arr):
 		maximum = 10
 	except IndexError:
 		pass
-	return maximum
+        maximum = 100
+	else:
+    #optional if you only want it execute when no exception
+        return maximum
 	#conclusion: run till error line
 	#conclusion: python will abort entire line 
+
+#__getattr__三连
+getattr
+setattr
+hasattr#only return AttributeError
