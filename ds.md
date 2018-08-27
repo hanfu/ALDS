@@ -48,13 +48,13 @@ python has hash(variable) as pre-hash
 
 ### hash func: 
 division, multiplication, universal
-1. d: v%k
+1. division: v%k
 k not be 2 poly or 10 poly
-2. m: (v * k)%(2^w) >> (w-r) 
+2. multiplication: (v * k)%(2^w) >> (w-r) 
 where 2^(w-1) < a < 2^w; or bit size of a
 r will be length of hash
 fast
-3. d: a little advanced; optimal
+3. universal: a little advanced; optimal
 
 ### probe func:
 permutation is required
@@ -69,7 +69,7 @@ t < 1/(1-ratio)
 each probe has p of 1-ratio to succeed
 so expect 1/(1-ratio) times
 
-## chaining vs AO
+## chaining vs OA
 OA:better cache performance(better memory usage, no pointers needed)
 Chaining:less sensitive to hash functions (OA requires extra care to avoid clustering) and the load ratio (OA degrades past 70% or so and in any event cannot support values larger than 1)
 
@@ -83,6 +83,13 @@ rehashing is necessary as # of buckets changed
 basic: target == [i:i+target.len] for i in source-target.len, cost = target.len* source.len
 hash: hash on both side: cost = source.len * hashing cost
 rotate hash: save hash time by character editing, make hashing cost to constant time
+
+### rolling hash
+base = 265 for ascii
+window string as a n-digit number where n = len(window)
+the rolling: pop first char and append next char
+next window value= window*base - prev_digit*base^n + next_digit
+next window hash = hash*base - prev_digit*(base^n%hash)<-pre_calculated + next_digit%hash
 
 ## binary search tree
 

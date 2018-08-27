@@ -295,6 +295,11 @@ class hashtable:
 #if load factor is large, collisions tends to be more
 #so lower performance in general
 
+pydict = {'k':'v'}
+'''built-in methods
+clear, get(k), pop(k), popitem(k), items(), keys(), values(), all(keys), any(keys),
+'''
+
 class BST():
     def __init__(self, v):
         self.root = BTree(v)

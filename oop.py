@@ -201,3 +201,73 @@ def tryindex(arr):
 getattr
 setattr
 hasattr#only return AttributeError
+
+#generator
+'''
+coroutine vs. subroutine
+subroutines are like functions/methods/callables, takes one return
+return implies that the function is returning control of execution to the point where the function was called
+coroutine yields results and remember the state, and can continue after one "return" and produce a series of yields
+Yield, implies that the transfer of control is temporary and voluntary, and our function expects to regain it in the future
+compare with multi-threading, coroutine is a cooperative multitasking with memory, while threads is pre-emptive multitasking
+'''
+iterables = ['a', 'bb', 'ccc']
+iterator = iter(iterables)
+next(iterator)
+def generator(): #the generator function
+	yield 'a'
+	yield 'bb'
+	yield 'ccc'
+gener = generator()#gener is now a generator
+next(gener)
+
+def count4ever(start):
+	while True:
+		start += 1
+		yield start
+
+g = count4ever(10)
+g.next()
+
+def fib():
+	a, b = 0, 1
+	while True:
+		yield a
+		a, b = b, a+b
+
+
+def count4ever_send():
+	while True:
+		start = yield
+		yield start+1
+gsend = count4ever_send()
+gsend.send(None) # to init the generator
+gsend.next() # or use next to init the generator
+gsend.send(10)#free to change parameter on the fly
+
+#generator expressions
+gsq = (x**2 for x in range(999))
+sum(gsq)# takes almost no memory!! efficient!!
+ 
+#in term of efficiency
+#map, filter, reduce
+
+###homemade iterator
+class ExampleIterator:
+	def __init__(self, datalist):
+		self.index = 0
+		self.data = datalist
+	def __iter__(self):
+		return self
+	def __next__(self):
+		if self.index >= len(self.data):
+			raise StopIteration()
+		rslt = self.data[self.index]
+		self.index += 1
+		return rslt
+
+g = ExampleIterator([1,2,3])
+
+#ascii
+ord('a')
+chr(97)
