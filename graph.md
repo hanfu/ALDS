@@ -35,3 +35,25 @@ explore the graph
 * back edge: edge goes back to ancestor, considered a loop
 * forward edge: leap to a descendent
 * cross edge: all other edges, cross the sub tree
+
+## Shortest Path
+
+### Bellman Ford
+* general case: can have negetive weight, cycles, etc.
+* bigO(VE): loop v times, relax all edges for each loop
+
+### if Directed Acyclic Graph
+* bigo(V+E): do a toposort and relax v's edges in toposort order
+
+### Dijkstra
+* non-negetive weights
+* can search from two ends to speed up the process
+
+### A * Search
+* with hueristics
+
+
+## Minimum Spanning Tree
+* given a undirected weighted graph, find minimum weighted tree that connects all vertices.
+
+* Kruskal and Prim: both greedy algo
